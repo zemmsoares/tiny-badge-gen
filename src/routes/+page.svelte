@@ -4,6 +4,7 @@
     import generated from "/src/assets/generated.svelte";
     import generated2 from "/src/assets/generated2.svelte";
     import generated3 from "../assets/generated3.svelte";
+    import generated4 from "../assets/generated4.svelte";
 
     let file;
     let badgeText = "";
@@ -62,24 +63,23 @@
         `
             )
             .join("");
-
         svgOutput = `
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${svgWidth}" height="${svgHeight}">
-                ${defs}
-                <linearGradient id="smooth" x2="0" y2="100%">
-                    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
-                    <stop offset="1" stop-opacity=".1"/>
-                </linearGradient>
-                <!-- Distro Logo -->
-                ${svgPaths}
-                <!-- Text on the badge -->
-                <g fill="#666666" text-anchor="left" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="10">
-                    <text x="${13 + textTranslateX}" y="${
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
+    ${defs}
+    <linearGradient id="smooth" x2="0" y2="100%">
+        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+        <stop offset="1" stop-opacity=".1"/>
+    </linearGradient>
+    <!-- Distro Logo -->
+    ${svgPaths}
+    <!-- Text on the badge -->
+    <g fill="#666666" text-anchor="left" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="10">
+        <text x="${13 + textTranslateX}" y="${
             9 + textTranslateY
         }">${badgeText}</text>
-                </g>
-            </svg>
-        `;
+    </g>
+</svg>
+`;
     }
 
     function handleCreateBadge() {
@@ -170,11 +170,12 @@
             on:change={handleBackgroundRedChange}
         />
     </label><br />
-    zemmsoares <svelte:component this={example} />
-    <span style={spanStyle}>{@html svgOutput}</span>
-
-    <svelte:component this={example2} />
-    <svelte:component this={generated} />
+    <div class="parent-of-span-and-svg">
+        zemmsoares <svelte:component this={generated4} />
+        <span style={spanStyle}>{@html svgOutput}</span>
+        <svelte:component this={generated4} />
+        <svelte:component this={generated4} />
+    </div>
 </div>
 
 <div style="font-size: 7px;">
@@ -193,19 +194,37 @@
 <br />
 
 <div>
-    Generated using the tool
-    <svelte:component this={generated} />
-    <svelte:component this={generated2} />
-    <svelte:component this={generated3} />
+    This Badges are Inline
+    <svelte:component this={generated4} />
+    <svelte:component this={generated4} />
+    <svelte:component this={generated4} />
+
+    <br />
+    Test &nbsp;<svelte:component this={generated4} />
+    <svelte:component this={generated4}/>
 </div>
 
 <style>
     span {
+        display: inline-block;
         line-height: 0;
-        height: 10px;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
     }
 
-    .backgroundRed {
-        background-color: red;
+    span,
+    svg {
+        vertical-align: middle;
+    }
+
+    .parent-of-span {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .parent-of-span-and-svg {
+        display: flex;
+        align-items: center;
     }
 </style>
