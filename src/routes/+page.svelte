@@ -171,9 +171,9 @@
         />
     </label><br />
     <div class="parent-of-span-and-svg">
-        zemmsoares <svelte:component this={generated4} />
-        <span style={spanStyle}>{@html svgOutput}</span>
-        <svelte:component this={generated4} />
+        zemmsoares&nbsp;<svelte:component this={generated4} />&nbsp;
+        <span style={spanStyle}>{@html svgOutput}</span>&nbsp;
+        <svelte:component this={generated4} />&nbsp;
         <svelte:component this={generated4} />
     </div>
 </div>
