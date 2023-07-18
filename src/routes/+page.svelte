@@ -1,21 +1,9 @@
 <script>
-    import generated4 from "../assets/generated4.svelte";
+    import opentype from "opentype.js";
 
-    // final exports
-    import arch from "../assets/export/arch.svelte";
-    import neovim from "../assets/export/neovim.svelte";
-    import Nixos from "../assets/export/nixos.svelte";
-    import Artix from "../assets/export/artix.svelte";
-    import Debian from "../assets/export/debian.svelte";
-    import Fedora from "../assets/export/fedora.svelte";
-    import Freebsd from "../assets/export/freebsd.svelte";
-    import Gentoo from "../assets/export/gentoo.svelte";
-    import Kali from "../assets/export/kali.svelte";
-    import Manjaro from "../assets/export/manjaro.svelte";
-    import Mint from "../assets/export/mint.svelte";
-    import Ubuntu from "../assets/export/ubuntu.svelte";
-    import Void from "../assets/export/void.svelte";
-    import Xfce from "../assets/export/xfce.svelte";
+    import archExample from "../assets/archExample.svelte";
+
+    let font = null;
 
     let file;
     let badgeText = "";
@@ -28,13 +16,19 @@
     let svgUrl = "";
     let isBackgroundRed = false;
 
+    // Load the font file
+    opentype
+        .load("./src/lib/liberation/LiberationSans-Regular.ttf")
+        .then((loadedFont) => {
+            font = loadedFont;
+        });
+
     let spanStyle = "";
 
     $: {
         spanStyle = isBackgroundRed
             ? "background-color: none;"
             : "background-color: red";
-        console.log(spanStyle);
     }
 
     let svgWidth = 64;
@@ -65,6 +59,15 @@
             paths.push({ path, color });
         }
 
+        // Get path data for the badge text
+        let badgeTextPath = font.getPath(
+            badgeText,
+            13 + textTranslateX,
+            9 + textTranslateY,
+            10
+        );
+        let badgeTextPathData = badgeTextPath.toPathData(2);
+
         let svgPaths = paths
             .map(
                 ({ path, color }) => `
@@ -75,22 +78,18 @@
             )
             .join("");
         svgOutput = `
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
-    ${defs}
-    <linearGradient id="smooth" x2="0" y2="100%">
-        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
-        <stop offset="1" stop-opacity=".1"/>
-    </linearGradient>
-    <!-- Distro Logo -->
-    ${svgPaths}
-    <!-- Text on the badge -->
-    <g fill="#666666" text-anchor="left" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="10">
-        <text x="${13 + textTranslateX}" y="${
-            9 + textTranslateY
-        }">${badgeText}</text>
-    </g>
-</svg>
-`;
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
+            ${defs}
+            <linearGradient id="smooth" x2="0" y2="100%">
+                <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+                <stop offset="1" stop-opacity=".1"/>
+            </linearGradient>
+            <!-- Distro Logo -->
+            ${svgPaths}
+            <!-- Text on the badge -->
+            <path d="${badgeTextPathData}" fill="#666666" />
+        </svg>
+    `;
     }
 
     function handleCreateBadge() {
@@ -182,10 +181,10 @@
         />
     </label><br />
     <div class="parent-of-span-and-svg">
-        zemmsoares&nbsp;<svelte:component this={generated4} />&nbsp;
+        zemmsoares&nbsp;<svelte:component this={archExample} />&nbsp;
         <span style={spanStyle}>{@html svgOutput}</span>&nbsp;
-        <svelte:component this={generated4} />&nbsp;
-        <svelte:component this={generated4} />
+        <svelte:component this={archExample} />&nbsp;
+        <svelte:component this={archExample} />
     </div>
 </div>
 
@@ -203,24 +202,6 @@
     Badge" and save as svg
 </div>
 <br />
-
-<div>
-    This Badges are Inline
-    <svelte:component this={arch} />
-    <svelte:component this={neovim} />
-    <svelte:component this={Nixos} />
-    <svelte:component this={Artix} />
-    <svelte:component this={Debian} />
-    <svelte:component this={Fedora} />
-    <svelte:component this={Freebsd} />
-    <svelte:component this={Gentoo} />
-    <svelte:component this={Kali} />
-    <svelte:component this={Manjaro} />
-    <svelte:component this={Mint} />
-    <svelte:component this={Ubuntu} />
-    <svelte:component this={Void} />
-    <svelte:component this={Xfce} />
-</div>
 
 <style>
     span {
