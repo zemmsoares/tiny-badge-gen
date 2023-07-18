@@ -1,10 +1,21 @@
 <script>
-    import example from "/src/assets/example.svelte";
-    import example2 from "/src/assets/example2.svelte";
-    import generated from "/src/assets/generated.svelte";
-    import generated2 from "/src/assets/generated2.svelte";
-    import generated3 from "../assets/generated3.svelte";
     import generated4 from "../assets/generated4.svelte";
+
+    // final exports
+    import arch from "../assets/export/arch.svelte";
+    import neovim from "../assets/export/neovim.svelte";
+    import Nixos from "../assets/export/nixos.svelte";
+    import Artix from "../assets/export/artix.svelte";
+    import Debian from "../assets/export/debian.svelte";
+    import Fedora from "../assets/export/fedora.svelte";
+    import Freebsd from "../assets/export/freebsd.svelte";
+    import Gentoo from "../assets/export/gentoo.svelte";
+    import Kali from "../assets/export/kali.svelte";
+    import Manjaro from "../assets/export/manjaro.svelte";
+    import Mint from "../assets/export/mint.svelte";
+    import Ubuntu from "../assets/export/ubuntu.svelte";
+    import Void from "../assets/export/void.svelte";
+    import Xfce from "../assets/export/xfce.svelte";
 
     let file;
     let badgeText = "";
@@ -195,13 +206,20 @@
 
 <div>
     This Badges are Inline
-    <svelte:component this={generated4} />
-    <svelte:component this={generated4} />
-    <svelte:component this={generated4} />
-
-    <br />
-    Test &nbsp;<svelte:component this={generated4} />
-    <svelte:component this={generated4}/>
+    <svelte:component this={arch} />
+    <svelte:component this={neovim} />
+    <svelte:component this={Nixos} />
+    <svelte:component this={Artix} />
+    <svelte:component this={Debian} />
+    <svelte:component this={Fedora} />
+    <svelte:component this={Freebsd} />
+    <svelte:component this={Gentoo} />
+    <svelte:component this={Kali} />
+    <svelte:component this={Manjaro} />
+    <svelte:component this={Mint} />
+    <svelte:component this={Ubuntu} />
+    <svelte:component this={Void} />
+    <svelte:component this={Xfce} />
 </div>
 
 <style>
